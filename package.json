@@ -1,0 +1,25 @@
+{
+  "name": "chatbot-neppo",
+  "version": "1.0.0",
+  "description": "Technical challenge to Neppo | Chatbot ",
+  "main": "src/app.ts",
+  "scripts": {
+    "prepare": "husky",
+    "dev": "tsx src/app.ts"
+  },
+  "keywords": [],
+  "author": "Rafael Gonçalves Francisco",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@tsconfig/node22": "^22.0.1",
+    "@types/node": "^22.14.1",
+    "@types/readline-sync": "^1.4.8",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
