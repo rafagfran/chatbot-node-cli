@@ -1,12 +1,4 @@
-import { greetingState } from "./states/greetingState.js";
+import { StateMachine } from "./states/StateMachine.js";
 
-let currentState = greetingState();
-
-async function main() {
-	while (currentState) {
-		// biome-ignore lint/style/useConst: <explanation>
-		let nextState = await currentState();
-		currentState = nextState;
-	}
-}
-main();
+const machine = new StateMachine();
+machine.run();

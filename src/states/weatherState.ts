@@ -1,26 +1,24 @@
 import { getCordinates } from "../services/nominatimService.js";
 import { getWeather } from "../services/openMeteoService.js";
-import { question } from "../utils/getInput.js";
-import { menuState } from "./menuState.js";
+import { AppState } from "../types/types.js";
+import { getUserInput } from "../utils/getInput.js";
 
-export async function weatherState() {
+export async function weatherState(): Promise<AppState> {
 	let city = "";
 
-	while (!city) {
-		city = question("Digite o nome da cidade > ");
-	}
-
 	try {
+		while (!city) {
+			city = getUserInput("Digite o nome da cidade > ");
+		}
 		console.log("🔎 Buscando informacoes...");
-		const { lat, lon } = await getCordinates(city);
 
-		const { temperature, time } = await getWeather(lat, lon);
+		const { lat, lon, name } = await getCordinates(city);
+		const { temperature } = await getWeather(lat, lon);
 
-		console.log("Horario: ", time);
-		console.log("Temperatura: ", temperature);
+		console.log(`Temperatura atual em ${name}: ${temperature?.toFixed(2)}°C`);
 	} catch (error) {
 		console.error(error);
 	}
 
-	return menuState;
+	return AppState.MENU;
 }

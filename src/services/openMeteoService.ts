@@ -1,7 +1,6 @@
 import { fetchWeatherApi } from "openmeteo";
 
 type CurrentWeather = {
-	time: Date;
 	temperature: number | undefined;
 };
 
@@ -25,10 +24,10 @@ export async function getWeather(
 		throw new Error("Current weather data is unavailable.");
 	}
 
-	const utcOffsetSeconds = response.utcOffsetSeconds();
+	// const utcOffsetSeconds = response.utcOffsetSeconds();
 
 	const weatherData = {
-		time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+		// time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
 		temperature: current.variables(0)?.value(),
 	};
 

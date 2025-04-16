@@ -2,6 +2,7 @@ import axios from "axios";
 import { getAxiosErrorMessage } from "../utils/getAxiosErrorMessage.js";
 
 type CityCoordinates = {
+	name: string;
 	lat: string;
 	lon: string;
 };

@@ -1,10 +1,8 @@
 import chalk from "chalk";
-import { question } from "../utils/getInput.js";
-import { weatherState } from "./weatherState.js";
+import { AppState } from "../types/types.js";
+import { getMenuChoice } from "../utils/getInput.js";
 
-export async function menuState() {
-	let userChoice = "";
-
+export async function menuState(): Promise<AppState> {
 	const options = [
 		{ selector: 1, title: "Consultar clima" },
 		{ selector: 0, title: "Sair" },
@@ -21,21 +19,16 @@ export async function menuState() {
 
 	while (true) {
 		showMenu();
+		const choice = getMenuChoice();
 
-		while (!userChoice) {
-			userChoice = question("\nDigite o valor numero correspondente: ").trim();
-		}
-
-		switch (userChoice) {
+		switch (choice) {
 			case "1":
-				return await weatherState();
+				return AppState.WEATHER;
 			case "0":
-				console.log("\nSaindo... 👋\n");
-				return () => null;
+				return AppState.EXIT;
 			default:
 				console.clear();
 				console.log(chalk.red("\n❌ Opção inválida. Tente novamente.\n"));
-				userChoice = "";
 		}
 	}
 }
