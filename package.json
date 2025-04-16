@@ -4,7 +4,6 @@
   "description": "Technical challenge to Neppo | Chatbot ",
   "main": "src/app.ts",
   "scripts": {
-    "prepare": "husky",
     "dev": "tsx src/app.ts"
   },
   "keywords": [],
@@ -20,6 +19,9 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "axios": "^1.8.4",
+    "chalk": "^5.4.1",
+    "openmeteo": "^1.2.0",
     "readline-sync": "^1.4.10"
   }
 }
