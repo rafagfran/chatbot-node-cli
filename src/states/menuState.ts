@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import { AppState } from "../types/types.js";
-import { getMenuChoice } from "../utils/getInput.js";
+import { displayMessage } from "../utils/displayMessage.js";
+import { getUserInput } from "../utils/getInput.js";
 
 export async function menuState(): Promise<AppState> {
 	const options = [
@@ -9,13 +10,19 @@ export async function menuState(): Promise<AppState> {
 	];
 
 	function showMenu() {
-		console.log(chalk.yellow("Escolha uma das opções abaixo:\n"));
+		displayMessage("\nEscolha uma das opções abaixo:\n", "highlight");
 		options.map((option) => {
-			return console.log(chalk.bold(`[${option.selector}]`), option.title);
+			displayMessage(`${chalk.bold(`[${option.selector}] `) + option.title}`);
 		});
 	}
 
-	console.log("=== Menu Principal ===\n");
+	function getMenuChoice() {
+		let input = "";
+		while (!input) {
+			input = getUserInput("\nDigite o valor correspondente: ").trim();
+		}
+		return input;
+	}
 
 	while (true) {
 		showMenu();
@@ -28,7 +35,7 @@ export async function menuState(): Promise<AppState> {
 				return AppState.EXIT;
 			default:
 				console.clear();
-				console.log(chalk.red("\n❌ Opção inválida. Tente novamente.\n"));
+				displayMessage("\n❌ Opção inválida. Tente novamente.\n", "error");
 		}
 	}
 }

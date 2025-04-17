@@ -4,3 +4,8 @@ export enum AppState {
 	EXIT = "exit",
 }
 export type StateFunction = () => Promise<AppState | null>;
+
+export type CurrentWeather = {
+	temperature: number;
+};
+

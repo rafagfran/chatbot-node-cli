@@ -1,4 +1,7 @@
+import { displayMessage } from "../utils/displayMessage.js";
+
 export async function exitState() {
-	console.log("Obrigado por usar o chatbot. Até logo!");
+	console.clear();
+	displayMessage("\nObrigado por usar o chatbot. Até logo!\n", "bold");
 	return null;
 }

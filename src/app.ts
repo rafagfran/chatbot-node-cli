@@ -1,4 +1,4 @@
-import { StateMachine } from "./states/StateMachine.js";
+import { StateMachine } from "./stateMachine.js";
 
-const machine = new StateMachine();
-machine.run();
+const chatbot = new StateMachine();
+chatbot.run();

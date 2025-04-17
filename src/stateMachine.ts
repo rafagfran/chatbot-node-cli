@@ -1,7 +1,8 @@
-import { AppState, type StateFunction } from "../types/types.js";
-import { exitState } from "./exitState.js";
-import { menuState } from "./menuState.js";
-import { weatherState } from "./weatherState.js";
+import { exitState } from "./states/exitState.js";
+import { menuState } from "./states/menuState.js";
+import { weatherState } from "./states/weatherState.js";
+import { AppState, type StateFunction } from "./types/types.js";
+import { displayMessage } from "./utils/displayMessage.js";
 
 const states: Record<AppState, StateFunction> = {
 	menu: menuState,
@@ -9,6 +10,7 @@ const states: Record<AppState, StateFunction> = {
 	exit: exitState,
 };
 
+// Classe que encapsula lógica da maquina de estados
 export class StateMachine {
 	private currentState: AppState;
 
@@ -17,6 +19,8 @@ export class StateMachine {
 	}
 
 	async run() {
+		console.clear()
+		displayMessage("👋 Olá, seja bem vindo de volta!\n", "header");
 		while (true) {
 			const nextState = await states[this.currentState]();
 			if (!nextState) break;
