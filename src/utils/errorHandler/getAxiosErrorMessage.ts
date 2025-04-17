@@ -5,8 +5,6 @@ export function getAxiosErrorMessage(error: AxiosError): string {
 	const status = error.response?.status;
 	const message = error.message;
 
-	console.log(status);
-
 	if (code === AxiosError.ECONNABORTED) {
 		return "A requisição demorou demais e foi abortada.";
 	}
