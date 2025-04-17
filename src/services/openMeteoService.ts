@@ -1,14 +1,15 @@
 import { fetchWeatherApi } from "openmeteo";
-import type { CurrentWeather } from "../types/types.js";
+import { handleServiceError } from "../utils/errorHandler/handleServiceError.js";
 
-export async function getWeather(
-	latitude: string,
-	longitude: string,
-): Promise<CurrentWeather> {
+type CurrentWeather = {
+	temperature: number;
+};
+
+export async function getWeather(latitude: string, longitude: string): Promise<CurrentWeather> {
 	const params = {
 		latitude,
 		longitude,
-		current: ["temperature_2m", "precipitation"],
+		current: ["temperature_2m"],
 	};
 
 	const url = "https://api.open-meteo.com/v1/forecast";
@@ -27,7 +28,7 @@ export async function getWeather(
 
 		const temperature = current.variables(0)?.value();
 		if (!temperature) {
-			throw new Error("Erro ao recuperar dados");
+			throw new Error("Dados sobre a temperatura indisponíveis.");
 		}
 
 		const weatherData = {
@@ -36,9 +37,6 @@ export async function getWeather(
 
 		return weatherData;
 	} catch (error) {
-		if (error instanceof Error) {
-			throw new Error(`Erro ao obter dados meteorológicos: ${error.message}`);
-		}
-		throw new Error("Erro desconhecido ao buscar os dados meteorológicos.");
+		handleServiceError(error, "Erro desconhecido ao buscar os dados meteorológicos");
 	}
 }

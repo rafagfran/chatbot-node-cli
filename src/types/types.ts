@@ -1,11 +1,7 @@
-export enum AppState {
+export enum AppStates {
 	MENU = "menu",
 	WEATHER = "weather",
+	CEP = "cep",
 	EXIT = "exit",
 }
-export type StateFunction = () => Promise<AppState | null>;
-
-export type CurrentWeather = {
-	temperature: number;
-};
-
+export type StateFunction = () => Promise<AppStates | null>;

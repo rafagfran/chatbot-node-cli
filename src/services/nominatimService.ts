@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAxiosErrorMessage } from "../utils/getAxiosErrorMessage.js";
+import { handleServiceError } from "../utils/errorHandler/handleServiceError.js";
 
 type CityCoordinates = {
 	name: string;
@@ -24,13 +24,6 @@ export async function getCordinates(city: string): Promise<CityCoordinates> {
 
 		return response;
 	} catch (error: unknown) {
-		if (axios.isAxiosError(error)) {
-			const message = getAxiosErrorMessage(error);
-			throw new Error(message);
-		}
-		if (error instanceof Error) {
-			throw new Error(`Erro ao buscar coordenadas (${error.message})`);
-		}
-		throw new Error("Erro desconhecido ao buscar coordenadas.");
+		handleServiceError(error, "Erro desconhecido ao buscar coordenadas.");
 	}
 }

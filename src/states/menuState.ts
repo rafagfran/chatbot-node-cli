@@ -1,22 +1,25 @@
 import chalk from "chalk";
-import { AppState } from "../types/types.js";
+import { AppStates } from "../types/types.js";
 import { displayMessage } from "../utils/displayMessage.js";
 import { getUserInput } from "../utils/getInput.js";
 
-export async function menuState(): Promise<AppState> {
-	const options = [
-		{ selector: 1, title: "Consultar clima" },
-		{ selector: 0, title: "Sair" },
+type MenuOption = { selector: string; title: string; state: AppStates };
+
+export async function menuState(): Promise<AppStates> {
+	const menuOptions: MenuOption[] = [
+		{ selector: "1", title: "Consultar clima", state: AppStates.WEATHER },
+		{ selector: "2", title: "Consultar CEP", state: AppStates.CEP },
+		{ selector: "0", title: "Sair", state: AppStates.EXIT },
 	];
 
 	function showMenu() {
 		displayMessage("\nEscolha uma das opções abaixo:\n", "highlight");
-		options.map((option) => {
-			displayMessage(`${chalk.bold(`[${option.selector}] `) + option.title}`);
-		});
+		for (const option of menuOptions) {
+			displayMessage(`[${chalk.bold(option.selector)}] ${option.title}`);
+		}
 	}
 
-	function getMenuChoice() {
+	function getUserChoice() {
 		let input = "";
 		while (!input) {
 			input = getUserInput("\nDigite o valor correspondente: ").trim();
@@ -26,16 +29,13 @@ export async function menuState(): Promise<AppState> {
 
 	while (true) {
 		showMenu();
-		const choice = getMenuChoice();
+		const choice = getUserChoice();
 
-		switch (choice) {
-			case "1":
-				return AppState.WEATHER;
-			case "0":
-				return AppState.EXIT;
-			default:
-				console.clear();
-				displayMessage("\n❌ Opção inválida. Tente novamente.\n", "error");
-		}
+		const nextState = menuOptions.find((option) => option.selector === choice)?.state;
+
+		if (nextState !== undefined) return nextState;
+
+		console.clear();
+		displayMessage("\n❌ Opção inválida. Tente novamente.\n", "error");
 	}
 }
