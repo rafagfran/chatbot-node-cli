@@ -2,6 +2,7 @@ import axios from "axios";
 import { handleServiceError } from "../utils/errorHandler/handleServiceError.js";
 
 type AddressInfo = {
+	cep: string,
 	logradouro: string;
 	bairro: string;
 	localidade: string;
@@ -11,9 +12,9 @@ type AddressInfo = {
 	erro?: boolean;
 };
 
-export async function getAddressInfo(cep: string): Promise<AddressInfo> {
+export async function getAddressInfo(zipCode: string): Promise<AddressInfo> {
 	try {
-		const url = `https://viacep.com.br/ws/${cep}/json/`;
+		const url = `https://viacep.com.br/ws/${zipCode}/json/`;
 
 		const { data } = await axios.get<AddressInfo>(url, {
 			timeout: 5000,

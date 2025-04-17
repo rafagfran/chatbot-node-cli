@@ -7,22 +7,23 @@ import { separator } from "../utils/separator.js";
 import { toBold } from "../utils/toBold.js";
 
 export async function cepState(): Promise<AppStates> {
-	let cep = "";
+	let zipCode = "";
 
 	console.clear();
 	displayMessage("📍 === CONSULTA DE CEP === 📍\n", "header");
 
 	try {
-		while (!cep) {
-			cep = getUserInput("Digite o cep: ").trim();
+		while (!zipCode) {
+			zipCode = getUserInput("Digite o cep: ").trim();
 		}
 
 		console.clear();
 		displayMessage("🔎 Buscando dados...", "bold");
 
-		const { bairro, ddd, localidade, logradouro, regiao, uf } = await getAddressInfo(cep);
+		const { cep, bairro, ddd, localidade, logradouro, regiao, uf } = await getAddressInfo(zipCode);
 
 		const address = {
+			cep: cep || "N/A",
 			logradouro: logradouro || "N/A",
 			bairro: bairro || "N/A",
 			localidade: localidade || "N/A",
@@ -33,6 +34,7 @@ export async function cepState(): Promise<AppStates> {
 
 		const message = [
 			"📍 Endereço encontrado:\n",
+			`${toBold("CEP")}: ${address.cep}`,
 			`${toBold("Logradouro")}: ${address.logradouro}`,
 			`${toBold("Bairro")}: ${address.bairro}`,
 			`${toBold("Cidade")}: ${address.localidade}`,
